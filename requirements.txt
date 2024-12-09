@@ -2,3 +2,5 @@ streamlit
 matplotlib==3.5.2
 numpy
 pandas
+imblearn
+seaborn
