@@ -41,7 +41,7 @@ if uploaded_file:
 
         # Display predictions
         st.header("Predictions:")
-        st.dataframe(df)
+        st.dataframe(df['Prediction'])
 
         # Visualization
         st.header("Performance Visualization")
@@ -90,7 +90,7 @@ if uploaded_file:
         # Ensure all categories (Low, Medium, High) and Attendance Levels are included
         attendance_performance_counts = attendance_performance_counts.reindex(
             index=['Always', 'Sometimes', 'Never'],  # Ensure all attendance categories are present
-            columns=['High', 'Medium', 'Low'],  # Ensure all performance categories are present
+            columns=['Low', 'Medium', 'High'],  # Ensure all performance categories are present
             fill_value=0  # Fill missing values with 0
         )
 
