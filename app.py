@@ -81,7 +81,7 @@ if uploaded_file:
         st.pyplot(plt)
 
         # Map Class Attendance to labels (1 = Always, 2 = Sometimes, 3 = Never)
-        attendance_mapping = {1: "Never", 2: "Sometimes", 3: "Always"}
+        attendance_mapping = {1: "Always", 2: "Sometimes", 3: "Never"}
         df['Attendance_Label'] = df['CLASS_ATTENDANCE'].map(attendance_mapping)
 
         # Group by Attendance and Performance Level, then count
@@ -90,7 +90,7 @@ if uploaded_file:
         # Ensure all categories (Low, Medium, High) and Attendance Levels are included
         attendance_performance_counts = attendance_performance_counts.reindex(
             index=['Always', 'Sometimes', 'Never'],  # Ensure all attendance categories are present
-            columns=['Low', 'Medium', 'High'],  # Ensure all performance categories are present
+            columns=['High', 'Medium', 'Low'],  # Ensure all performance categories are present
             fill_value=0  # Fill missing values with 0
         )
 
