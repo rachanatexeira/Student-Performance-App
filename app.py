@@ -81,7 +81,7 @@ if uploaded_file:
         st.pyplot(plt)
 
         # Map Class Attendance to labels (1 = Always, 2 = Sometimes, 3 = Never)
-        attendance_mapping = {1: "Always", 2: "Sometimes", 3: "Never"}
+        attendance_mapping = {1: "Never", 2: "Sometimes", 3: "Always"}
         df['Attendance_Label'] = df['CLASS_ATTENDANCE'].map(attendance_mapping)
 
         # Group by Attendance and Performance Level, then count
