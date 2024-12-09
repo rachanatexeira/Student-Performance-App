@@ -106,7 +106,7 @@ if uploaded_file:
         # plt.ylabel('Number of Students')
         # plt.title('Number of Students in Each Performance Level (by Class Attendance)')
         # st.pyplot(plt)
-        df['Performance_Level'] = pd.cut(df['PASS_GRADE'], bins=[0, 10, 15, 20], labels=['Low', 'Average', 'High'])
+        df['Performance_Level'] = pd.cut(df['Prediction'], bins=[0, 1, 2, 3], labels=['Low', 'Average', 'High'])
 
         # Group by gender and attendance and count the performance levels
         gender_attendance_performance = df.groupby(['Gender', 'Attendance', 'Performance_Level']).size().unstack(
