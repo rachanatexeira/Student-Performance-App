@@ -41,7 +41,7 @@ if uploaded_file:
 
         # Display predictions
         st.header("Predictions:")
-        st.dataframe(df)
+        st.dataframe(df['Prediction_Label'])
 
         # Visualization
         st.header("Performance Visualization")
