@@ -109,7 +109,7 @@ if uploaded_file:
         df['Performance_Level'] = pd.cut(df['Prediction'], bins=[0, 1, 2, 3], labels=['Low', 'Average', 'High'])
 
         # Group by gender and attendance and count the performance levels
-        gender_attendance_performance = df.groupby(['Gender', 'Attendance', 'Performance_Level']).size().unstack(
+        gender_attendance_performance = df.groupby(['GENDER', 'CLASS_ATTENDANCE', 'Performance_Level']).size().unstack(
             fill_value=0)
 
         # Plot a stacked bar chart
