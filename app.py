@@ -35,7 +35,7 @@ if uploaded_file:
 
         # Make predictions
         predictions = model.predict(scaled_data)
-        prediction_labels = {0: "Low", 1: "Medium", 2: "High"}
+        prediction_labels = {0: "Low", 1: "Average", 2: "High"}
         df["Prediction"] = predictions
         df["Prediction_Label"] = df["Prediction"].map(prediction_labels)
 
@@ -71,14 +71,14 @@ if uploaded_file:
         st.write("Number of male and female students in each performance category:")
         st.write(gender_performance_counts)
 
-        # Plot a stacked bar chart of the performance categories by gender
-        st.header("Performance Level Distribution by Gender")
-        gender_performance_counts.plot(kind='bar', stacked=True, alpha=0.7, color=['skyblue', 'lightcoral', 'red'],
-                                       figsize=(8, 6))
-        plt.xlabel('Gender')
-        plt.ylabel('Number of Students')
-        plt.title('Number of Students in Each Performance Level (by Gender)')
-        st.pyplot(plt)
+        # # Plot a stacked bar chart of the performance categories by gender
+        # st.header("Performance Level Distribution by Gender")
+        # gender_performance_counts.plot(kind='bar', stacked=True, alpha=0.7, color=['skyblue', 'lightcoral', 'red'],
+        #                                figsize=(8, 6))
+        # plt.xlabel('Gender')
+        # plt.ylabel('Number of Students')
+        # plt.title('Number of Students in Each Performance Level (by Gender)')
+        # st.pyplot(plt)
 
         # Map Class Attendance to labels (1 = Always, 2 = Sometimes, 3 = Never)
         attendance_mapping = {1: "Always", 2: "Sometimes", 3: "Never"}
