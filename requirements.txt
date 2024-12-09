@@ -1,5 +1,5 @@
 streamlit
-matplotlib==3.5.2
+matplotlib
 numpy
 pandas
 imblearn
