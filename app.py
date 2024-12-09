@@ -40,7 +40,7 @@ if uploaded_file:
         df["Prediction_Label"] = df["Prediction"].map(prediction_labels)
 
         # Display predictions
-        st.write("Predictions:")
+        st.header("Predictions:")
         st.dataframe(df)
 
         # Visualization
