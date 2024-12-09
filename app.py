@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
-from imblearn.over_sampling import SMOTE  # For handling imbalanced datasets
-from sklearn.inspection import permutation_importance
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
+# from imblearn.over_sampling import SMOTE  # For handling imbalanced datasets
+# from sklearn.inspection import permutation_importance
+# from sklearn.metrics import confusion_matrix
+# import seaborn as sns
 
 st.title('Higher Education Student Performance')
 st.write('Upload a CSV file containing student data to predict and analyze their performance. The app uses key factors such as Gender, Class Attendance, and other relevant features to provide insights into how these variables influence student success. Simply upload your file, and the app will process the data and give you performance predictions based on the model’s analysis.')
