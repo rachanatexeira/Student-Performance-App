@@ -79,34 +79,7 @@ if uploaded_file:
         plt.ylabel('Number of Students')
         plt.title('Number of Students in Each Performance Level (by Gender)')
         st.pyplot(plt)
-
-        # Map Class Attendance to labels (1 = Always, 2 = Sometimes, 3 = Never)
-        attendance_mapping = {1: "Always", 2: "Sometimes", 3: "Never"}
-        df['Attendance_Label'] = df['CLASS_ATTENDANCE'].map(attendance_mapping)
-
-        # Group by Attendance and Performance Level, then count
-        attendance_performance_counts = df.groupby(['Attendance_Label', 'Prediction_Label']).size().unstack().fillna(0)
-
-        # Ensure all categories (Low, Medium, High) and Attendance Levels are included
-        attendance_performance_counts = attendance_performance_counts.reindex(
-            index=['Always', 'Sometimes', 'Never'],  # Ensure all attendance categories are present
-            columns=['Low', 'Average', 'High'],  # Ensure all performance categories are present
-            fill_value=0  # Fill missing values with 0
-        )
-
-        # Show the counts in the Streamlit app
-        st.write("Number of students in each performance category based on class attendance:")
-        st.write(attendance_performance_counts)
-
-        # Plot a stacked bar chart of the performance categories by attendance
-        st.header("Performance Level Distribution by Class Attendance")
-        attendance_performance_counts.plot(kind='bar', stacked=True, alpha=0.7, color=['lightgreen', 'salmon', 'gold'],
-                                           figsize=(8, 6))
-        plt.xlabel('Class Attendance Level')
-        plt.ylabel('Number of Students')
-        plt.title('Number of Students in Each Performance Level (by Class Attendance)')
-        st.pyplot(plt)
-
+        
 # Add a sidebar for additional options
 st.sidebar.header("About")
 st.sidebar.write("This app predicts student performance based on key factors, including Gender and Class Attendance, which have the highest influence on academic outcomes. Additionally, being actively engaged in classes and regular reading habits appear to positively impact performance. The presence of siblings also shows some influence, while having a job seems to negatively affect performance. By analyzing these factors, the app provides insights into what contributes most to student success.")
