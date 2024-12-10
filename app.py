@@ -12,6 +12,7 @@ import pickle
 
 st.title('Higher Education Student Performance')
 st.write('Upload a CSV file containing student data to predict and analyze their performance. The app uses key factors such as Gender, Class Attendance, and other relevant features to provide insights into how these variables influence student success. Simply upload your file, and the app will process the data and give you performance predictions based on the model’s analysis.')
+st.write('Please note: Model is prepopulated with sample csv. ')
 # Load the pre-trained model
 model_svm_path = "model_svm.pkl"  # Replace with your saved model path
 scaler_minmax_path = "scaler_minmax.pkl"
