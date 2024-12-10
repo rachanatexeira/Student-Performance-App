@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
+
+from tensorflow.tools.docs.doc_controls import header
+
 # from imblearn.over_sampling import SMOTE  # For handling imbalanced datasets
 # from sklearn.inspection import permutation_importance
 # from sklearn.metrics import confusion_matrix
@@ -19,67 +22,71 @@ with open(scaler_minmax_path, "rb") as scaler_file:
 
 uploaded_file = st.file_uploader('Choose a file: ')
 if uploaded_file:
-    st.header('Student Performance')
-    df = pd.read_csv(uploaded_file, encoding='latin-1', header = 0)
-    st.write('Uploaded Dataset')
-    st.dataframe(df)
-    st.write(df.describe())
+    df = pd.read_csv(uploaded_file, encoding='latin-1', header=0)
+else:
+    df = pd.read_csv('student_data.csv', encoding='latin-1', header=0)
 
-    if df.isnull().sum().sum() > 0:
-        st.error("Dataset contains missing values. Please clean the data and try again.")
-    else:# Ensure all columns are numeric
-        X = df.astype(float)  # Convert all columns to float for scaler compatibility
+st.header('Student Performance')
 
-        # Scale the data
-        scaled_data = scaler.transform(X)
+st.write('Uploaded Dataset')
+st.dataframe(df)
+st.write(df.describe())
 
-        # Make predictions
-        predictions = model.predict(scaled_data)
-        prediction_labels = {0: "Low", 1: "Average", 2: "High"}
-        df["Prediction"] = predictions
-        df["Prediction_Label"] = df["Prediction"].map(prediction_labels)
+if df.isnull().sum().sum() > 0:
+    st.error("Dataset contains missing values. Please clean the data and try again.")
+else:  # Ensure all columns are numeric
+    X = df.astype(float)  # Convert all columns to float for scaler compatibility
 
-        # Display predictions
-        st.header("Predictions:")
-        st.dataframe(df['Prediction_Label'])
+    # Scale the data
+    scaled_data = scaler.transform(X)
 
-        # Visualization
-        st.header("Performance Visualization")
-        # Count the number of students in each category (Low, Medium, High)
-        performance_counts = df["Prediction_Label"].value_counts()
+    # Make predictions
+    predictions = model.predict(scaled_data)
+    prediction_labels = {0: "Low", 1: "Average", 2: "High"}
+    df["Prediction"] = predictions
+    df["Prediction_Label"] = df["Prediction"].map(prediction_labels)
 
-        # Show the counts in the Streamlit app
-        st.write("Number of students in each performance category:")
-        st.write(performance_counts)
+    # Display predictions
+    st.header("Predictions:")
+    st.dataframe(df['Prediction_Label'])
 
-        # Plot a bar chart of the performance categories
-        st.header("Performance Level Distribution")
-        fig, ax = plt.subplots(figsize=(8, 6))
-        performance_counts.plot(kind='bar', alpha=0.7, color='skyblue', edgecolor='black', ax=ax)
-        ax.set_xlabel('Performance Level')
-        ax.set_ylabel('Number of Students')
-        ax.set_title('Number of Students in Each Performance Level')
-        st.pyplot(fig)
+    # Visualization
+    st.header("Performance Visualization")
+    # Count the number of students in each category (Low, Medium, High)
+    performance_counts = df["Prediction_Label"].value_counts()
 
-        # Map Gender to Labels (1 = Female, 2 = Male)
-        df["Gender_Label"] = df["GENDER"].map({1: "Female", 2: "Male"})
+    # Show the counts in the Streamlit app
+    st.write("Number of students in each performance category:")
+    st.write(performance_counts)
 
-        # Group by Gender and Performance Level, then count
-        gender_performance_counts = df.groupby(['Gender_Label', 'Prediction_Label']).size().unstack().fillna(0)
+    # Plot a bar chart of the performance categories
+    st.header("Performance Level Distribution")
+    fig, ax = plt.subplots(figsize=(8, 6))
+    performance_counts.plot(kind='bar', alpha=0.7, color='skyblue', edgecolor='black', ax=ax)
+    ax.set_xlabel('Performance Level')
+    ax.set_ylabel('Number of Students')
+    ax.set_title('Number of Students in Each Performance Level')
+    st.pyplot(fig)
 
-        # Show the counts in the Streamlit app
-        st.write("Number of male and female students in each performance category:")
-        st.write(gender_performance_counts)
+    # Map Gender to Labels (1 = Female, 2 = Male)
+    df["Gender_Label"] = df["GENDER"].map({1: "Female", 2: "Male"})
 
-        # Plot a stacked bar chart of the performance categories by gender
-        st.header("Performance Level Distribution by Gender")
-        gender_performance_counts.plot(kind='bar', stacked=True, alpha=0.7, color=['skyblue', 'lightcoral', 'red'],
-                                       figsize=(8, 6))
-        plt.xlabel('Gender')
-        plt.ylabel('Number of Students')
-        plt.title('Number of Students in Each Performance Level (by Gender)')
-        st.pyplot(plt)
-        
+    # Group by Gender and Performance Level, then count
+    gender_performance_counts = df.groupby(['Gender_Label', 'Prediction_Label']).size().unstack().fillna(0)
+
+    # Show the counts in the Streamlit app
+    st.write("Number of male and female students in each performance category:")
+    st.write(gender_performance_counts)
+
+    # Plot a stacked bar chart of the performance categories by gender
+    st.header("Performance Level Distribution by Gender")
+    gender_performance_counts.plot(kind='bar', stacked=True, alpha=0.7, color=['skyblue', 'lightcoral', 'red'],
+                                   figsize=(8, 6))
+    plt.xlabel('Gender')
+    plt.ylabel('Number of Students')
+    plt.title('Number of Students in Each Performance Level (by Gender)')
+    st.pyplot(plt)
+
 # Add a sidebar for additional options
 st.sidebar.header("About")
 st.sidebar.write("This app predicts student performance based on key factors, including Gender and Class Attendance, which have the highest influence on academic outcomes. Additionally, being actively engaged in classes and regular reading habits appear to positively impact performance. The presence of siblings also shows some influence, while having a job seems to negatively affect performance. By analyzing these factors, the app provides insights into what contributes most to student success.")
